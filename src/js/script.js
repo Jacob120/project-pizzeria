@@ -140,8 +140,7 @@
       const thisProduct = this;
       
       // convert form to objet structure e.g. { sauce: ['tomato'], toppings: ['olives', redPeppers]}
-      const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData', formData);
+      const formData = utils.serializeFormToObject(thisProduct.form);      
       
       // set price to default price 
       let price = thisProduct.data.price;
@@ -150,19 +149,18 @@
       for(let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { lablel: 'Toppings', type: 'checkoboxes'...}
         const param = thisProduct.data.params[paramId];
-        console.log('param:', paramId, param);
 
         // for every option in this category
         for(let optionId in param.options) {
 
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
-          const option = param.options[optionId];
-          console.log('option:', option.price);
+          const option = param.options[optionId];          
           // check if there is param with name of paramId in formData and if it includes optionId
           if(formData[paramId] && formData[paramId].includes(optionId)) {
+
             // check if the option is not default
             if (option.default != true) {
-              console.log('default', option.default);
+              
               // add option price to variable
               price = price + option.price;
             }
