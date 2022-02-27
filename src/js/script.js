@@ -99,9 +99,8 @@
       const clickableTrigger = thisProduct.element.querySelector(
         select.menuProduct.clickable
       );
-      console.log('clickable', clickableTrigger);
-      /* START: add event listener to clickable trigger on event click */      
-
+      
+      /* START: add event listener to clickable trigger on event click */    
       clickableTrigger.addEventListener('click', function(event) {     
         /* prevent default action for event */
         event.preventDefault();
@@ -139,7 +138,45 @@
 
     processOrder(){
       const thisProduct = this;
-      console.log('processOrder:', thisProduct);
+      
+      // convert form to objet structure e.g. { sauce: ['tomato'], toppings: ['olives', redPeppers]}
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
+      
+      // set price to default price 
+      let price = thisProduct.data.price;
+
+      // for every category (param)...
+      for(let paramId in thisProduct.data.params) {
+        // determine param value, e.g. paramId = 'toppings', param = { lablel: 'Toppings', type: 'checkoboxes'...}
+        const param = thisProduct.data.params[paramId];
+        console.log('param:', paramId, param);
+
+        // for every option in this category
+        for(let optionId in param.options) {
+
+          // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+          const option = param.options[optionId];
+          console.log('option:', option.price);
+          // check if there is param with name of paramId in formData and if it includes optionId
+          if(formData[paramId] && formData[paramId].includes(optionId)) {
+            // check if the option is not default
+            if (option.default != true) {
+              console.log('default', option.default);
+              // add option price to variable
+              price = price + option.price;
+            }
+          } else {
+            // check if the option is default
+            if (option.default == true) {
+              // reduce price variable
+              price = price - option.price;
+            }
+          }
+        }
+      }
+      // update calculated price in the HTML
+      thisProduct.priceElem.innerHTML = price;
     }
   }
 
