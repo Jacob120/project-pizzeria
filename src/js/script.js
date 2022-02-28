@@ -89,6 +89,8 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      console.log('imagewrapper', thisProduct.imageWrapper);
       
     }
 
@@ -140,21 +142,24 @@
       const thisProduct = this;
       
       // convert form to objet structure e.g. { sauce: ['tomato'], toppings: ['olives', redPeppers]}
-      const formData = utils.serializeFormToObject(thisProduct.form);      
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData:', formData);
+      
       
       // set price to default price 
       let price = thisProduct.data.price;
 
       // for every category (param)...
       for(let paramId in thisProduct.data.params) {
-        // determine param value, e.g. paramId = 'toppings', param = { lablel: 'Toppings', type: 'checkoboxes'...}
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkoboxes'...}
         const param = thisProduct.data.params[paramId];
 
         // for every option in this category
         for(let optionId in param.options) {
-
+          
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
-          const option = param.options[optionId];          
+          const option = param.options[optionId];   
+          
           // check if there is param with name of paramId in formData and if it includes optionId
           if(formData[paramId] && formData[paramId].includes(optionId)) {
 
@@ -169,6 +174,17 @@
             if (option.default == true) {
               // reduce price variable
               price = price - option.price;
+            }
+          }
+          // determine image selector
+          const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
+          // check if there is an image and if there is param[Id] in formDta and if it includes optionId
+          if (optionImage != null && formData[paramId] && formData[paramId].includes(optionId)){
+            optionImage.classList.add(classNames.menuProduct.imageVisible);          
+          } else {
+            // else if formData[paramId].includes(optionId) return false - remove class active
+            if (optionImage != null && formData[paramId].includes(optionId) == false){
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
         }
