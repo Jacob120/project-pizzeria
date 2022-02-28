@@ -90,8 +90,7 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      console.log('imagewrapper', thisProduct.imageWrapper);
-      
+            
     }
 
     initAccordion() {
@@ -142,9 +141,7 @@
       const thisProduct = this;
       
       // convert form to objet structure e.g. { sauce: ['tomato'], toppings: ['olives', redPeppers]}
-      const formData = utils.serializeFormToObject(thisProduct.form);
-      console.log('formData:', formData);
-      
+      const formData = utils.serializeFormToObject(thisProduct.form);  
       
       // set price to default price 
       let price = thisProduct.data.price;
@@ -159,9 +156,11 @@
           
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];   
-          
+          // check if option is selected
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
           // check if there is param with name of paramId in formData and if it includes optionId
-          if(formData[paramId] && formData[paramId].includes(optionId)) {
+          console.log('form:', formData[paramId].includes(optionId));
+          if(optionSelected) {
 
             // check if the option is not default
             if (option.default != true) {
@@ -179,11 +178,11 @@
           // determine image selector
           const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
           // check if there is an image and if there is param[Id] in formDta and if it includes optionId
-          if (optionImage != null && formData[paramId] && formData[paramId].includes(optionId)){
+          if (optionImage != null && optionSelected){
             optionImage.classList.add(classNames.menuProduct.imageVisible);          
           } else {
             // else if formData[paramId].includes(optionId) return false - remove class active
-            if (optionImage != null && formData[paramId].includes(optionId) == false){
+            if (optionImage != null && optionSelected == false){
               optionImage.classList.remove(classNames.menuProduct.imageVisible);
             }
           }
