@@ -65,7 +65,7 @@
     // CODE ADDED END
   };
 
-  const settings = {
+  const settings = {  
     amountWidget: {
       defaultValue: 1,
       defaultMin: 0,
@@ -232,7 +232,7 @@
       /* multiply price by amount */
       price *= thisProduct.amountWidget.value;
       /* get price from product */
-      thisProduct.priceSingle = price;
+      thisProduct.priceSingle = price / thisProduct.amountWidget.value;
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
@@ -281,8 +281,7 @@
         for(let optionId in param.options) {
           
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
-          const option = param.options[optionId];  
-          console.log('option:', option);
+          const option = param.options[optionId];            
           // check if option is selected
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
           // check if there is param with name of paramId in formData and if it includes optionId
@@ -292,10 +291,7 @@
         }          
       }      
       return params;      
-    }
-
-
-  
+    }  
   }
 
   class AmountWidget{
@@ -357,7 +353,9 @@
     announce(){
       const thisWidget = this;
 
-      const event = new Event('updated');
+      const event = new CustomEvent('updated', {
+        bubbles: true
+      });
       thisWidget.element.dispatchEvent(event);
     }
   }
@@ -369,7 +367,8 @@
       thisCart.products = [];
 
       thisCart.getElements(element);
-      thisCart.initActions();      
+      thisCart.initActions();
+              
     }
 
     getElements(element){
@@ -378,7 +377,11 @@
       thisCart.dom = {    
         wrapper: element,   
         toggleTrigger: element.querySelector(select.cart.toggleTrigger),
-        productList: element.querySelector(select.cart.productList),        
+        productList: element.querySelector(select.cart.productList),
+        deliveryFee: element.querySelector(select.cart.deliveryFee),
+        subtotalPrice: element.querySelector(select.cart.subtotalPrice),
+        totalPrice: element.querySelectorAll(select.cart.totalPrice),
+        totalNumber: element.querySelector(select.cart.totalNumber),        
       };      
     }
 
@@ -389,12 +392,41 @@
         event.preventDefault();
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+      thisCart.dom.productList.addEventListener('updated', function(){
+        thisCart.update();
+      });
+    }
+
+    update(){
+      const thisCart = this;
+
+      let deliveryFee = settings.cart.defaultDeliveryFee;
+      let totalNumber = 0;
+      let subtotalPrice = 0;
+
+      for(let product of thisCart.products){
+        totalNumber += product.amount;
+        subtotalPrice += product.price;
+      }
+      thisCart.totalPrice = subtotalPrice + deliveryFee;      
+      if(totalNumber <= 0){
+        deliveryFee = 0;        
+      }
+
+      thisCart.dom.totalPrice.forEach((domElement) => {
+        domElement.innerHTML = thisCart.totalPrice;
+      });
+      thisCart.dom.totalNumber.innerHTML = totalNumber;
+      thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+      thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
+      console.log('totalPrice:', thisCart.totalPrice);
+      
     }
 
     add(menuProduct){
       const thisCart = this;
 
-      console.log('adding product', menuProduct);
+     
 
       /* generate HTML based on template */
       const generatedHTML = templates.cartProduct(menuProduct);
@@ -405,24 +437,63 @@
       thisCart.dom.productList.appendChild(generatedDOM);
 
       /* add products sumamry to thisCart.products []*/
-      thisCart.products.push(menuProduct);
-      console.log('thisCart.products', thisCart.products);
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));    
+      thisCart.update();
     }
+  
   }
 
-  // class CartProduct{
-  //   constructor(menuProduct, element){
-  //     const thisCartProduct = this;
+  class CartProduct{
+    constructor(menuProduct, element){
+      const thisCartProduct = this;
 
-  //     thisCartProduct.id = menuProduct.id;
-  //     thisCartProduct.name = menuProduct.name;
+      thisCartProduct.id = menuProduct.id;
+      thisCartProduct.name = menuProduct.name;
+      thisCartProduct.amount = menuProduct.amount;
+      thisCartProduct.params = menuProduct.params;
+      thisCartProduct.price = menuProduct.price;
+      thisCartProduct.priceSingle = menuProduct.priceSingle;
 
-  //     thisCartProduct.getElements(element);
+      thisCartProduct.getElements(element);
+      thisCartProduct.initAmountWidget();      
+    }
 
+    getElements(element){
+      const thisCartProduct = this;
 
-  //   }
+      thisCartProduct.dom = {
+        wrapper: element,
+        amountWidgetElem: element.querySelector(select.cartProduct.amountWidget),
+        price: element.querySelector(select.cartProduct.price),
+        edit: element.querySelector(select.cartProduct.edit), 
+        remove: element.querySelector(select.cartProduct.remove),   
+      };     
+    }
 
-  // }
+    initAmountWidget(){
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidgetElem);
+
+      thisCartProduct.dom.amountWidgetElem.addEventListener('updated', function(){
+        thisCartProduct.amount = thisCartProduct.amountWidget;
+        thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount.value;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;      
+      });
+    }
+
+    remove(){
+      const thisCartProduct = this;
+
+      const event = new CustomEvent('remove', {
+        bubbles: true,
+        detail: {
+          cartProduct: thisCartProduct,
+        },
+      });
+      thisCartProduct.dom.wrapper.dispatchEvent(event);
+    }
+  }
 
   const app = {
     initMenu: function () {
