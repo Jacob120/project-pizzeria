@@ -10,7 +10,7 @@ const app = {
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
 
-    const idFromHash = window.location.hash.replace('#/', '');    
+    const idFromHash = window.location.hash.replace('#', '');    
 
     let pageMatchingHash = thisApp.pages[0].id;
 
@@ -26,7 +26,7 @@ const app = {
     for(let link of thisApp.navLinks){
       link.addEventListener('click', function(event){
         const clickedElement = this;
-        event.preventDefault;
+        event.preventDefault();
 
         /* get page id from href attribute */
         const id = clickedElement.getAttribute('href').replace('#', '');
