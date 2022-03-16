@@ -78,7 +78,7 @@ class Cart{
     for(let prod of thisCart.products){
       payload.products.push(prod.getData());
     }
-    console.log('payload',payload);
+   
   }
 
   update(){
@@ -90,8 +90,7 @@ class Cart{
 
     for(let product of thisCart.products){
       thisCart.totalNumber += product.amount;
-      thisCart.subtotalPrice += product.price;
-      console.log('product', product);
+      thisCart.subtotalPrice += product.price;      
     }
          
     if(thisCart.totalNumber <= 0){
@@ -105,9 +104,7 @@ class Cart{
 
     thisCart.dom.totalPrice.forEach((domElement) => {
       domElement.innerHTML = thisCart.totalPrice;
-    });
-    console.log('totalPrice:', thisCart.totalPrice);
-    
+    });    
   }
 
   add(menuProduct){
@@ -138,10 +135,8 @@ class Cart{
     list.splice(productIndex, 1);
          
     
-    thisCart.update();
-          
+    thisCart.update();          
   }
-
 }
 
 export default Cart;
