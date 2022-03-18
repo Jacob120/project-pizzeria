@@ -256,15 +256,5 @@
      "starters": ["lemonWater"]
    }
  ],
- "bookings": [
-    {
-       "id": 1,
-       "date": "2022.03.16",
-       "hour": "16:00",
-       "table": 1,
-       "duration": 3,
-       "ppl": 4,
-       "starters": ["water"]
-    }
- ]
+ "bookings": []
 }
