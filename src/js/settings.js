@@ -43,7 +43,11 @@ export const select = {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
     tables: '.floor-plan .table',
-    diningRoom: '.floor-plan',    
+    diningRoom: '.floor-plan',
+    phone: '[name="phone"]',
+    address: '[name="address"]', 
+    form: '.booking-form',
+    starter: '[name="starter"]'   
   },
   nav: {
     links: '.main-nav a',
