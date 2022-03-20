@@ -9,6 +9,8 @@
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="./vendor/rangeSlider.css">
+  <link rel="stylesheet" href="./vendor/flickity.css" media="screen">
+  <!-- <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css"> -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -64,7 +66,7 @@
 
   <div id="pages">
     <section id="home">
-      <div id="home-id" class="home-container"></div>
+      <div id="home-id" class="home-wrapper container"></div>
       </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
@@ -75,7 +77,79 @@
   </div>
 
   <script id="template-home-page" type="text/x-handlebars-template">
-    
+    <div class="wrap">      
+      <div class="row">
+        <div class="card-1">          
+          <div class="card-body ">             
+              <a href="#" class="btn">
+                <img src="./images/assets/pizza-1.jpg" alt="">
+                <p>Order online</p>
+              </a>
+          </div>
+        </div>
+        <div class="card-2">          
+          <div class="card-body ">             
+              <a href="#" class="btn"><img src="./images/assets/pizza-2.jpg" alt=""><p>Book a table</p></a>
+          </div>
+        </div>
+      </div>
+      <div class="opening-hours container">
+        <h2>Opening hours</h2>
+        <p>Tue-Sun, 12PM - 12AM</p>        
+      </div>
+      <div class="main-carousel" data-flickity='{ "cellAlign": "left", "contain": true, "wrapAround": true, "autoPlay": true, "prevNextButtons": false }'>
+        <div class="carousel-cell">
+          <div class="box">
+            <div class="box-image">
+              <img src="./images/assets/pizza-3.jpg">
+            </div>          
+            <div class="box-description">
+              <h2 class="box-tittle">Lorem ipsum</h2>
+              <p>Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+              <p>Author</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-cell">
+          <div class="box">
+            <div class="box-image">
+              <img src="./images/assets/pizza-4.jpg">
+            </div>          
+            <div class="box-description">
+              <h2 class="box-tittle">Lorem ipsum</h2>
+              <p>Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+              <p>Author</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-cell">
+          <div class="box">
+            <div class="box-image">
+              <img src="./images/assets/pizza-5.jpg">
+            </div>          
+            <div class="box-description">
+              <h2 class="box-tittle">Lorem ipsum</h2>
+              <p>Lorem ipsum Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+              <p>Author</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="gallery">
+          <div class="row">
+            <div class="images-container">
+              <div class="image">
+                <img src="./images/assets/pizza-4.jpg">
+                <a class="btn-container">
+                  <a href="#"><i class="fa-solid fa-heart"></i>Like</a>
+                  <a href="#"><i class="fa-solid fa-share-nodes"></i>Share</a>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>     
   </script>
 
   <script id="template-cart-product" type="text/x-handlebars-template">
@@ -252,6 +326,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="./vendor/rangeSlider.js"></script>
+  <script scr="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="./vendor/flickity.pkgd.js"></script>
+  <!-- <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>- -->
   <script src="js/app.js" type="module"></script>
 </body>
 </html>

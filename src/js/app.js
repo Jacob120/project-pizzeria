@@ -2,6 +2,7 @@ import {settings, select, classNames} from './settings.js';
 import Product from './components/Product.js';
 import Cart from './components/Cart.js';
 import Booking from './components/Booking.js';
+import Home from './components/Home.js';
 
 const app = {
   initPages: function(){
@@ -101,17 +102,23 @@ const app = {
     thisApp.booking = new Booking(bookingElement);
 
   },
+
+  initHome(){
+    const thisApp = this;
+
+    const homeElement = document.querySelector(select.containerOf.home);
+
+    thisApp.home = new Home(homeElement);
+  },
+
   init: function () {
     const thisApp = this;
-    // console.log('*** App starting ***');
-    // console.log('thisApp:', thisApp);
-    // console.log('classNames:', classNames);
-    // console.log('settings:', settings);
-    // console.log('templates:', templates);
+  
     thisApp.initPages();
     thisApp.initData();      
     thisApp.initCart();
     thisApp.initBooking();
+    thisApp.initHome();
   },
     
 };
