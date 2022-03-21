@@ -10,19 +10,20 @@
 
 .card-buttons {
   width: auto;
-  position: relative; 
-  justify-content: space-between; 
-  img {    
-    width: $base-size * 23;      
+  position: relative;
+  justify-content: space-between;
+
+  img {
+    width: $base-size * 23;
     height: $base-size * 10;
     object-fit: cover;
-    border-radius: 10px;   
-    z-index: 0;    
+    border-radius: 10px;
+    z-index: 0;
   }
-  a {    
-    z-index:  2;
-  }
-  
+
+  a {
+    z-index: 2;
+  }  
 }
 
 .card-body {
@@ -30,23 +31,25 @@
   align-items: center;
   position: relative;
   text-align: center;
+
   h1 {
     color: $color-light;
     font-size: $base-size * 1.5;
     font-family: $font-header;
     position: absolute;
-    left: 30%;   
+    left: 30%;
     text-transform: uppercase;
     z-index: 3;
     pointer-events: none;
     transition: $transition;       
   }
+
   p {
     color: $color-light;
     font-family: $font-text;
     position: absolute;
     z-index: 3;
-    text-align: center;   
+    text-align: center;
     left: 10%;
     top: 60%;
     transition: $transition;
@@ -58,6 +61,7 @@
   h1 {
     transform: translateY(-20px);
   }
+
   p {
     transform: translateY(-20px);
     visibility: visible;
@@ -99,7 +103,7 @@
 }
 
 .box {
-  display: flex;  
+  display: flex;
   justify-content: space-around;
 }
 
@@ -110,6 +114,7 @@
   h2{
     font-family: $font-header;
   }
+
   p{
     font-family: $font-text;
   }
@@ -144,9 +149,10 @@
 .image {
   display: flex;
   align-items: center;
-  justify-content:center; 
+  justify-content: center;
   width: 100%;
   position: relative;
+
   img {
     height: $base-size * 14;
     width: $base-size * 14;
@@ -154,12 +160,14 @@
     z-index: 0;
     border-radius: 5px;
   }
+
   .icon-container {
-    position: absolute; 
-    left: 40%;    
+    position: absolute;
+    left: 40%;
     visibility: hidden;
-    transition: transform 0.5s ease-out;  
-    z-index: 5;  
+    transition: transform 0.5s ease-out;
+    z-index: 5;
+
     .icon {
       color: $color-light;
       font-size: $base-size;            
@@ -172,8 +180,9 @@
     visibility: visible;
     transform: scale(2);    
   }
+
   .icon:hover {
-     color: $color-main;    
+    color: $color-main;
   }
 }
 
@@ -197,6 +206,7 @@
     flex-direction: column;
     justify-content: center;
   }
+
   .card-body {
     width: 100%;
     display: inline-flex;
